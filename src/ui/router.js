@@ -1,26 +1,54 @@
 import { Home } from "./pages/home.js"
 import { About } from "./pages/about.js"
+import { Clientes } from "./pages/clientes.js"
+
+let clientesView = "list"
 
 export function render(route) {
   const app = document.getElementById("app")
 
   if (route === "about") {
     app.innerHTML = About()
-  }else if(route === "home") {
+    document.getElementById("goHome")
+      .addEventListener("click", () => {
+        render("home")
+      })
+
+  } else if (route === "home") {
     app.innerHTML = Home()
     const form = document.getElementById("userForm");
-    form.addEventListener("submit",(e)=>{
-        // e.preventDefault(); evita recargar
+    if (form) {
+      form.addEventListener("submit", (e) => {
+
         const input = document.getElementById("username");
         const name = input.value;
 
-        
-        console.log("aaaaaaa",name)
-        window.api.addUser(name).then(id =>{
-            console.log("Usuario ingresado con exito: ",id);
+        window.api.addUser(name).then(id => {
+          console.log("Usuario ingresado con exito: ", id);
         })
-    })
+      })
+    }
 
+
+  } else if (route === "clientes") {
+    //clientesView = "list";
+    app.innerHTML = Clientes(clientesView);
+
+    const goHomeBtn = document.getElementById("goHome")
+    if (goHomeBtn) {
+      clientesView = "list";
+      goHomeBtn.addEventListener("click", () => {
+        render("home")
+      })
+    }
+
+    if (clientesView === "list") {
+      document.getElementById("newClient")
+        .addEventListener("click", () => {
+          clientesView = "form"
+          render("clientes")
+        })
+    }
 
 
 

@@ -48,17 +48,43 @@ db.prepare(`
   )
 `).run();
 
+
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS aportacion (
+  id INTEGER PRIMARY KEY,
+  name TEXT UNIQUE
+)
+`).run();
+
+db.prepare(`
+  INSERT OR IGNORE INTO aportacion (name) VALUES
+  ('Industria y Comercio'),
+  ('Construciion'),
+  ('Rural')
+`).run();
+
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS cliente_aportacion (
+  cliente_id INTEGER,
+  aportacion_id INTEGER,
+  PRIMARY KEY (cliente_id, aportacion_id),
+  FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+  FOREIGN KEY (aportacion_id) REFERENCES aportacion(id)
+);
+`).run();
+
 db.prepare(`
   CREATE TABLE IF NOT EXISTS clientes (
     id INTEGER PRIMARY KEY,
     name TEXT,
-    rut INTEGER,
+    rut TEXT,
     num_empresa INTEGER,
     state BOOLEAN NOT NULL DEFAULT 0,
     email TEXT,
     cel TEXT,
-    ci INTEGER,
-    gub TEXT
+    ci TEXT,
+    gub TEXT,
+    tipoEmp TEXT
 
   )
 `).run();
@@ -66,5 +92,25 @@ db.prepare(`
 ipcMain.handle('add-user', (event, name) => {
   const stmt = db.prepare('INSERT INTO users (name) VALUES (?)');
   const info = stmt.run(name);
+  return info.lastInsertRowid;
+});
+
+ipcMain.handle('add-client', (event, client) => {
+  const stmt = db.prepare(`
+    INSERT INTO clientes (name, rut, num_empresa, email, cel, ci, gub, tipoEmp) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const info = stmt.run(
+    client.nombre, 
+    client.rut, 
+    client.numEmp, 
+    client.correo, 
+    client.celular, 
+    client.cedula, 
+    client.claveGub, 
+    client.tipoEmp
+  );
+
   return info.lastInsertRowid;
 });
