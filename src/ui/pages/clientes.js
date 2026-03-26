@@ -7,7 +7,7 @@ export function Clientes(view) {
     <button id="newClient">Nuevo Cliente</button>
 
     <hr class=linea1>
-    <form id="userForm">
+    <form id="clientForm">
     </br>
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" />

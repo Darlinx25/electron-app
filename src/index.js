@@ -95,6 +95,12 @@ ipcMain.handle('add-user', (event, name) => {
   return info.lastInsertRowid;
 });
 
+ipcMain.handle('add-aportacion', (event, aportacion) => {
+  const stmt = db.prepare('INSERT INTO cliente_aportacion (cliente_id,aportacion_id) VALUES (?,?)');
+  const info = stmt.run(aportacion.cliente_id,aportacion.aportacion_id);
+  return info.lastInsertRowid;
+});
+
 ipcMain.handle('add-client', (event, client) => {
   const stmt = db.prepare(`
     INSERT INTO clientes (name, rut, num_empresa, email, cel, ci, gub, tipoEmp) 
