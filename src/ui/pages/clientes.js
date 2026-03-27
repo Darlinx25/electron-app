@@ -5,7 +5,6 @@ export function Clientes(view) {
     
     <button id="goHome">Home</button>
     <button id="newClient">Nuevo Cliente</button>
-
     <hr class=linea1>
     <form id="clientForm">
     </br>
@@ -52,16 +51,26 @@ export function Clientes(view) {
             <input type="checkbox" name="aportacionRural" id="aportacionRural" value="Rural">
             <span>Rural</span>
         </label>
+      <div class ="derecha">
+          <div>  
+            <button type="submit">Cancelar</button>
+          </div>
+          <div>
+            <button type="submit">Crear</button>
+          </div>
+      </div>
+      
 
-      <button type="submit">Crear</button>
+      
     </form>
-
+    <div id="clientsList"></div>
 
 `
   return `
     <h1>Clientes</h1>
     <button id="goHome">Home</button>
     <button id="newClient">Nuevo Cliente</button>
+    <div id="clientsList"></div>
     
 `
 

@@ -115,6 +115,7 @@ td {
 .derecha {
     display: flex;
     align-items: flex-start;
+    gap: 20px;
 }
 
 .checkbox-group {
