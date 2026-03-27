@@ -17,6 +17,7 @@ export function render(route) {
       })
 
   } else if (route === "home") {
+    
     app.innerHTML = Home()
     const form = document.getElementById("userForm");
     if (form) {

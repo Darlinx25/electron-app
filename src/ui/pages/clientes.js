@@ -70,13 +70,12 @@ export function Clientes(view) {
 
 export async function loadClients() {
   const clients = await window.api.getClients();
-
   const container = document.getElementById('clientsList');
   container.innerHTML = `
-    
-      <table>
+      <table >
         <caption>
-          Clientes
+
+          <h3>Lista de Clientes</h3>
         </caption>
   <thead>
     <tr>
@@ -96,17 +95,18 @@ export async function loadClients() {
     <tr>
       <td> ${c.name}</td>
       <td>${c.tipoEmp}</td>
-      <td></td>
+      <td>${c.aportaciones}</td>
       <td>${c.cel}</td>
       <td>${c.email}</td>
       <td>${c.num_empresa}</td>
       <td>${c.rut}</td>
-      <td>${c.cedula}</td>
+      <td>${c.ci}</td>
       <td>${c.gub}</td>
     </tr>
     `).join("")}
   </tbody>
 </table>
+
  
   `;
 }
