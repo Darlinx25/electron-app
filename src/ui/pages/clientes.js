@@ -57,15 +57,27 @@ export function Clientes(view) {
     </form>
 
 
-`
+`   
     return `
     <h1>Clientes</h1>
     <button id="goHome">Home</button>
     <button id="newClient">Nuevo Cliente</button>
-
     
-
-
 `
+    
+}
 
+
+export async function loadClients() {
+  const clients = await window.api.getClients();
+  
+  const container = document.getElementById('clientsList');
+  container.innerHTML = clients.map(c => `
+    <div>
+      <p>Nombre: ${c.name}</p>
+      <p>RUT: ${c.rut}</p>
+      <p>Email: ${c.email}</p>
+      <p>Celular: ${c.cel}</p>
+    </div>
+  `).join('');
 }

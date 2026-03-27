@@ -1,8 +1,10 @@
 import { Home } from "./pages/home.js"
 import { About } from "./pages/about.js"
-import { Clientes } from "./pages/clientes.js"
+import { Clientes, loadClients } from "./pages/clientes.js"
 
 let clientesView = "list"
+
+
 
 export function render(route) {
   const app = document.getElementById("app")
@@ -32,7 +34,7 @@ export function render(route) {
 
   } else if (route === "clientes") {
     app.innerHTML = Clientes(clientesView);
-
+    loadClients();
     const goHomeBtn = document.getElementById("goHome")
     if (goHomeBtn) {
       clientesView = "list";
@@ -51,7 +53,7 @@ export function render(route) {
       const form = document.getElementById("clientForm");
       if (form) {
         form.addEventListener("submit", (e) => {
-          e.preventDefault(); //para no recargar 
+          //e.preventDefault(); //para no recargar 
           const nombre = document.getElementById("nombre");
           const correo = document.getElementById("correo");
           const celular = document.getElementById("celular");

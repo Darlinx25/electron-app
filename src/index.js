@@ -101,6 +101,11 @@ ipcMain.handle('add-aportacion', (event, aportacion) => {
   return info.lastInsertRowid;
 });
 
+ipcMain.handle('get-clients', () => {
+  const stmt = db.prepare('SELECT * FROM clientes');
+  return stmt.all();
+})
+
 ipcMain.handle('add-client', (event, client) => {
   const stmt = db.prepare(`
     INSERT INTO clientes (name, rut, num_empresa, email, cel, ci, gub, tipoEmp) 
@@ -120,3 +125,5 @@ ipcMain.handle('add-client', (event, client) => {
 
   return info.lastInsertRowid;
 });
+
+
