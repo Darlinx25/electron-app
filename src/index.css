@@ -96,6 +96,16 @@ button:hover {
   cursor: pointer;
 }
 
+table,
+th,
+td {
+  border: 2px solid black;
+  border-collapse: collapse; 
+  padding: 4px; 
+  background-color: #ffffff;
+}
+
+
 .derecha {
     display: flex;
     align-items: flex-start;
@@ -159,3 +169,4 @@ button:hover {
   /*background-color: hsl(140, 2%, 8%, 1%) !important;
     backdrop-filter: blur(1px);*/
 }
+

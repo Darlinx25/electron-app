@@ -1,6 +1,6 @@
 export function Clientes(view) {
-    if (view === "form")
-        return `
+  if (view === "form")
+    return `
     <h1>Clientes</h1>
     
     <button id="goHome">Home</button>
@@ -57,27 +57,56 @@ export function Clientes(view) {
     </form>
 
 
-`   
-    return `
+`
+  return `
     <h1>Clientes</h1>
     <button id="goHome">Home</button>
     <button id="newClient">Nuevo Cliente</button>
     
 `
-    
+
 }
 
 
 export async function loadClients() {
   const clients = await window.api.getClients();
-  
+
   const container = document.getElementById('clientsList');
-  container.innerHTML = clients.map(c => `
-    <div>
-      <p>Nombre: ${c.name}</p>
-      <p>RUT: ${c.rut}</p>
-      <p>Email: ${c.email}</p>
-      <p>Celular: ${c.cel}</p>
-    </div>
-  `).join('');
+  container.innerHTML = `
+    
+      <table>
+        <caption>
+          Clientes
+        </caption>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo Empresa</th> 
+      <th>Aportacion</th>
+      <th>Celular</th>
+      <th>Email</th>
+      <th>N° Empresa</th>
+      <th>RUT</th>
+      <th>CI</th>
+      <th>GUB</th>
+    </tr>
+  </thead>
+  <tbody>
+  ${clients.map(c => `
+    <tr>
+      <td> ${c.name}</td>
+      <td>${c.tipoEmp}</td>
+      <td></td>
+      <td>${c.cel}</td>
+      <td>${c.email}</td>
+      <td>${c.num_empresa}</td>
+      <td>${c.rut}</td>
+      <td>${c.cedula}</td>
+      <td>${c.gub}</td>
+    </tr>
+    `).join("")}
+  </tbody>
+</table>
+ 
+  `;
 }
