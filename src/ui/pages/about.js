@@ -1,6 +1,14 @@
 export function About() {
-  return `
-    <h1>About</h1>
-    <button onclick="go('home')">Ir a About</button>
-  `
+  return {
+    html: `
+      <h1>About</h1>
+      <button id="goHome">Home</button>
+    `,
+    init: () => {
+      document.getElementById("goHome")
+        .addEventListener("click", () => {
+          window.go("home")
+        })
+    }
+  }
 }

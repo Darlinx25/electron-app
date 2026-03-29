@@ -76,6 +76,16 @@ select:focus {
   background-color: #ffffff;
 }
 
+
+
+.cancelar{
+  background-color: #c77a7a;
+}
+
+.cancelar:hover{
+  background-color: #ec6e6e;
+}
+
 button {
   display: inline-block;
   padding: 5px 10px;
@@ -91,7 +101,7 @@ button {
 }
 
 button:hover {
-  background-color: #58a65ad2;
+  background-color: #8fd391;
   color: var(--dt-gray-0);
   cursor: pointer;
 }
@@ -111,11 +121,23 @@ td {
   background-color: #ffffff;
 }
 
+.contenedor {
+  display: flex;
+  max-width: 700px;
+}
+
+.contenedor > div {
+  flex: 1; 
+}
 
 .derecha {
+  margin-left: 60px;
+}
+
+.derechaForm {
     display: flex;
     align-items: flex-start;
-    gap: 20px;
+    gap: 5%;
 }
 
 .checkbox-group {
