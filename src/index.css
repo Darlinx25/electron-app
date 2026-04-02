@@ -91,11 +91,9 @@ button {
   padding: 5px 10px;
   background-color: var(--dt-cyan-6);
   color: #000000;
-
   border: 1px solid var(--dt-gray-2);
   font-family: 'IBM Plex Mono', monospace;
   transition: all 0.2s ease;
-
   margin-top: 5px;
 
 }
@@ -105,6 +103,37 @@ button:hover {
   color: var(--dt-gray-0);
   cursor: pointer;
 }
+
+.edit-btn,
+.copy-btn,
+.delete-btn{
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0px 0px;
+}
+
+.edit-btn{
+  color: burlywood;
+}
+
+.copy-btn{
+  color: yellowgreen;
+}
+
+.delete-btn{
+  color: rgb(148, 28, 28);
+}
+
+.edit-btn:hover,
+.copy-btn:hover,
+.delete-btn:hover{
+  background-color: transparent;
+  border: none;
+  color:var(--dt-white)
+}
+
 
 .centrar{
   margin-left: auto;

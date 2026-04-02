@@ -107,13 +107,27 @@ ipcMain.handle('get-clients', () => {
 
 ipcMain.handle('get-clients-con-aportaciones', () => {
   return db.prepare(`
-    SELECT c.*, GROUP_CONCAT(a.name) as aportaciones
+    SELECT c.*, 
+    GROUP_CONCAT(a.name) as aportaciones
+    FROM clientes c
+    LEFT JOIN cliente_aportacion ca ON c.id = ca.cliente_id
+    LEFT JOIN aportacion a ON ca.aportacion_id = a.id
+    GROUP BY c.id
+    ORDER BY c.name ASC;
+  `).all();
+});
+
+ipcMain.handle('get-clients-con-aportaciones-orden-de-registro', () => {
+  return db.prepare(`
+    SELECT c.*, 
+    GROUP_CONCAT(a.name) as aportaciones
     FROM clientes c
     LEFT JOIN cliente_aportacion ca ON c.id = ca.cliente_id
     LEFT JOIN aportacion a ON ca.aportacion_id = a.id
     GROUP BY c.id
   `).all();
 });
+
 
 ipcMain.handle('get-aportacion', () => {
   const stmt = db.prepare('SELECT * FROM cliente_aportacion');
