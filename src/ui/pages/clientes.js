@@ -58,7 +58,7 @@ function formTemplate() {
 
         <div class="derecha">
           <label for="inicioAct">Inicio de actividades:</label>
-          <input type="text" id="inicioAct" name="inicioAct" />
+          <input type="date" id="inicioAct" name="inicioAct" />
 
           <label for="usrFocer">Usuario FOCER:</label>
           <input type="text" id="usrFocer" name="usrFocer" />
@@ -93,8 +93,8 @@ function formTemplate() {
       <select name="tipoEmp" id="tipoEmp">
         <option value="Monotributo">Monotributo</option>
         <option value="LitE">Literal E</option>
-        <option value="platano" selected>Regimen General</option>
-        <option value="platano" selected>Otro</option>
+        <option value="Regimen General" selected>Regimen General</option>
+        <option value="Otro" selected>Otro</option>
       </select>
 
 
@@ -142,7 +142,9 @@ function setupFormView() {
   document.getElementById("clientForm")?.addEventListener("submit", handleFormSubmit)
 }
 
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
+  e.preventDefault()
+
   const client = {
     nombre: document.getElementById("nombre").value,
     rut: document.getElementById("rut").value,
@@ -161,31 +163,33 @@ function handleFormSubmit(e) {
   const aportacionContruccion = document.getElementById("aportacionContruccion")
   const aportacionRural = document.getElementById("aportacionRural")
 
-  api.addClient(client).then(idCliente => {
-    console.log("Cliente ingresado con exito: ", idCliente)
+  const idCliente = await api.addClient(client)
+  console.log("Cliente ingresado con exito: ", idCliente)
 
-    if (aportacionIyC.checked) {
-      api.addAportacion({ cliente_id: idCliente, aportacion_id: 1 })
-        .then(id => console.log("Aportacion IyC ingresada con exito: ", id))
-    }
-    if (aportacionContruccion.checked) {
-      api.addAportacion({ cliente_id: idCliente, aportacion_id: 2 })
-        .then(id => console.log("Aportacion Construccion ingresada con exito: ", id))
-    }
-    if (aportacionRural.checked) {
-      api.addAportacion({ cliente_id: idCliente, aportacion_id: 3 })
-        .then(id => console.log("Aportacion rural ingresada con exito: ", id))
-    }
-  })
+  const promises = []
+  if (aportacionIyC.checked) {
+    promises.push(api.addAportacion({ cliente_id: idCliente, aportacion_id: 1 }))
+  }
+  if (aportacionContruccion.checked) {
+    promises.push(api.addAportacion({ cliente_id: idCliente, aportacion_id: 2 }))
+  }
+  if (aportacionRural.checked) {
+    promises.push(api.addAportacion({ cliente_id: idCliente, aportacion_id: 3 }))
+  }
+
+  if (promises.length > 0) {
+    await Promise.all(promises)
+  }
 
   clientesView = "list"
+  window.go("clientes")
 }
 
 export async function loadClients() {
   const clients = await api.getClients()
   const container = document.getElementById("clientsList")
   container.innerHTML = `
-    <table>
+    <table class="tabla">
       <caption>
         <h3 style="display: flex;">Lista de Clientes</h3>
       </caption>
@@ -203,6 +207,7 @@ export async function loadClients() {
           <th>Fecha Inicio</th>
           <th>Usuario Focer</th>
           <th>Clave Focer</th>
+          <th class="tablaAcciones"></th>
         </tr>
       </thead>
       <tbody>
@@ -220,7 +225,13 @@ export async function loadClients() {
             <td>${c.inicioAct}</td>
             <td>${c.usrFocer}</td>
             <td>${c.claveFocer}</td>
+            <td class="tablaAcciones">
+              <button class="edit-btn" data-id="${c.id}">Editar</button>
+              <button class="copy-btn" data-id="${c.id}">Copiar</button>
+              <button class="delete-btn" data-id="${c.id}">Eliminar</button>
+            </td>
           </tr>
+          
         `).join("")}
       </tbody>
     </table>

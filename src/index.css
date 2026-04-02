@@ -111,14 +111,22 @@ button:hover {
   margin-right: auto;  
 }
 
-table,
-th,
-td {
-  
+.tabla {
+  border-collapse: collapse;
+}
+
+.tabla td,
+.tabla th{
   border: 2px solid black;
-  border-collapse: collapse; 
   padding: 4px; 
   background-color: #ffffff;
+}
+
+
+.tabla td.tablaAcciones,
+.tabla th.tablaAcciones {
+  border: none;
+  background: transparent;
 }
 
 .contenedor {
